@@ -2,7 +2,7 @@
 
 > Pick a date. Read the sky. Smile. A playful zodiac fortune for horse-racing fans — deterministic, mobile-first, single file.
 
-![single-file](https://img.shields.io/badge/single--file-index.html-gold) ![no-deps](https://img.shields.io/badge/deps-none-brightgreen) ![mobile](https://img.shields.io/badge/mobile-first-yes-blue) ![lang](https://img.shields.io/badge/lang-ID_%2B_EN-orange) ![license](https://img.shields.io/badge/fun-entertainment_only-purple)
+![single-file](https://img.shields.io/badge/single--file-index.html-gold) ![no-deps](https://img.shields.io/badge/deps-none-brightgreen) ![lang](https://img.shields.io/badge/lang-ID_%2B_EN-orange) ![license](https://img.shields.io/badge/fun-entertainment_only-purple)
 
 **Live demo:** Settings → Pages → Deploy from branch → `main` / root → open `https://<user>.github.io/<repo>/`
 

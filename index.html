@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lintasan Langit — Ramalan Pacuan Kuda Zodiak</title>
+    <meta name="description"
+        content="Lintasan Langit: ramalan pacuan kuda playful dari zodiak + info balapan JRA/NAR. Murni hiburan." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ============ Design tokens ============ */
+        :root {
+            --bg: #07130d;
+            --gold: #d4af37;
+            --gold-2: #f3d67c;
+            --cream: #f7f2e3;
+            --muted: #9db8a6;
+            --card: #0e2016;
+            --line: rgba(212, 175, 55, 0.28);
+        }
+
+        /* ============ Base ============ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--cream);
+            font-family: Outfit, sans-serif;
+            background:
+                radial-gradient(1000px 500px at 50% -80px, #16472c, transparent),
+                var(--bg);
+        }
+
+        .wrap {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 20px 16px 60px;
+        }
+
+        /* ============ Hero ============ */
+        .hero {
+            text-align: center;
+            padding: 28px 0 18px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border: 1px solid var(--line);
+            border-radius: 99px;
+            color: var(--gold-2);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 6px;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(38px, 9vw, 58px);
+            line-height: 1;
+            background: linear-gradient(180deg, #fff6d8, var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lang {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .lang button {
+            padding: 6px 16px;
+            border: 1px solid var(--line);
+            border-radius: 99px;
+            background: transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+        }
+
+        .lang button.on {
+            border-color: transparent;
+            background: linear-gradient(180deg, var(--gold-2), var(--gold));
+            color: #231a02;
+        }
+
+        /* ============ Card + form ============ */
+        .card {
+            margin-top: 16px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+                var(--card);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            color: var(--gold-2);
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: #08170f;
+            color: var(--cream);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .seg {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .seg button {
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            background: #08170f;
+            color: var(--muted);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+        }
+
+        .seg button.on {
+            border-color: transparent;
+            background: linear-gradient(180deg, var(--gold-2), var(--gold));
+            color: #231a02;
+        }
+
+        .zod {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px dashed var(--line);
+            border-radius: 12px;
+            background: #08170f;
+            font-size: 14px;
+        }
+
+        /* ============ Buttons ============ */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn.gold {
+            background: linear-gradient(180deg, var(--gold-2), var(--gold) 60%, #a8841f);
+            color: #231a02;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+        }
+
+        .btn.ghost {
+            margin-top: 10px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--gold-2);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* ============ Result ============ */
+        #hasil {
+            display: none;
+        }
+
+        .nums {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .nw {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .num {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 25%, #ffffff55, #134a2a);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .hn {
+            max-width: 66px;
+            overflow: hidden;
+            color: var(--muted);
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .chip {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: #08170f;
+        }
+
+        .chip small {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .chip b {
+            display: block;
+            margin-top: 4px;
+            font-size: 15px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            border: 1px solid #fff5;
+            border-radius: 50%;
+            vertical-align: -2px;
+        }
+
+        .bar {
+            height: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 99px;
+            background: #08170f;
+        }
+
+        .bar i {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #134a2a, var(--gold-2), var(--gold));
+            transition: width 1.2s cubic-bezier(0.2, 0.9, 0.2, 1);
+        }
+
+        .fortune {
+            margin: 14px 0;
+            padding: 12px 14px;
+            border-left: 3px solid var(--gold);
+            border-radius: 0 12px 12px 0;
+            background: rgba(212, 175, 55, 0.07);
+            font-family: Outfit, sans-serif;
+            font-size: 15px;
+            font-style: normal;
+            line-height: 1.7;
+        }
+
+        .num.anchor {
+            background: radial-gradient(circle at 30% 25%, #fff3c4, var(--gold) 70%);
+            color: #231a02;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.35), 0 0 18px rgba(212, 175, 55, 0.5);
+        }
+
+        .tag {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #231a02;
+            background: linear-gradient(180deg, var(--gold-2), var(--gold));
+            border-radius: 99px;
+            padding: 2px 8px;
+        }
+
+        .tag.dim {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .disclaimer {
+            margin-top: 18px;
+            padding: 10px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 14px;
+            color: #5b7263;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        svg.i {
+            flex: none;
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- Hero -->
+        <header class="hero">
+            <span class="badge">
+                <svg class="i" viewBox="0 0 24 24">
+                    <path d="M8 21h8M12 17v4M4 4h16v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4zM4 6h16" />
+                </svg>
+                JRA &bull; NAR &bull; INT
+            </span>
+            <h1>Lintasan Langit</h1>
+            <p class="sub" data-i18n="sub">Ramalan pacuan kuda dari bintang-bintang. Pilih tanggal, baca langit, pasang
+                senyum.</p>
+            <div class="lang" role="group" aria-label="Language / Bahasa">
+                <button type="button" id="langID" class="on">ID</button>
+                <button type="button" id="langEN">EN</button>
+            </div>
+        </header>
+
+        <!-- Kelahiran -->
+        <section class="card">
+            <h2>
+                <svg class="i" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21c0-4 3.5-6 8-6s8 2 8 6" />
+                </svg>
+                <span data-i18n="hBirth">Data Kelahiran</span>
+            </h2>
+
+            <label for="lahir" data-i18n="lblBirth">Tanggal lahir</label>
+            <input type="date" id="lahir" />
+
+            <div class="zod">
+                <svg class="i" viewBox="0 0 24 24">
+                    <path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z" />
+                </svg>
+                <span id="zodText">Pilih tanggal lahir — zodiak terbaca otomatis.</span>
+            </div>
+        </section>
+
+        <!-- Balapan -->
+        <section class="card">
+            <h2>
+                <svg class="i" viewBox="0 0 24 24">
+                    <path d="M4 17h16M6 17l3-8h6l3 8M9 9V5h6v4" />
+                </svg>
+                <span data-i18n="hRace">Info Balapan</span>
+            </h2>
+
+            <label data-i18n="lblSeg">Segmen</label>
+            <div class="seg">
+                <button type="button" id="segJRA" class="on">JRA</button>
+                <button type="button" id="segNAR">NAR</button>
+                <button type="button" id="segINT">INT</button>
+            </div>
+
+            <div class="row">
+                <div>
+                    <label for="course" data-i18n="lblCourse">Racecourse / Sirkuit</label>
+                    <select id="course"></select>
+                </div>
+                <div>
+                    <label for="raceno" data-i18n="lblRaceNo">Nomor Race</label>
+                    <select id="raceno">
+                        <option>R1</option>
+                        <option>R2</option>
+                        <option>R3</option>
+                        <option>R4</option>
+                        <option>R5</option>
+                        <option selected>R6</option>
+                        <option>R7</option>
+                        <option>R8</option>
+                        <option>R9</option>
+                        <option>R10</option>
+                        <option>R11</option>
+                        <option>R12</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <label for="race" data-i18n="lblRaceDay">Tanggal race day</label>
+                    <input type="date" id="race" />
+                </div>
+                <div>
+                    <label for="total" data-i18n="lblTotal">Jumlah kuda peserta</label>
+                    <input type="number" id="total" min="5" max="18" value="12" />
+                </div>
+            </div>
+
+            <label for="names" data-i18n="lblNames">Nama kuda (opsional, pisahkan koma)</label>
+            <textarea id="names" rows="2" placeholder="mis. Sakura Bolt, Golden Fuji"></textarea>
+
+            <button class="btn gold" id="btnRamalan" style="margin-top: 14px" data-i18n="btnOpen">Buka Ramalan
+                Langit</button>
+            <button class="btn ghost" id="btnAcak" data-i18n="btnShuffle">Acak Ramalan</button>
+        </section>
+
+        <!-- Hasil -->
+        <section class="card" id="hasil">
+            <h2>
+                <svg class="i" viewBox="0 0 24 24">
+                    <path d="M8 21h8M12 17v4M4 4h16v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4z" />
+                </svg>
+                <span id="hasilTitle" data-i18n-ph="slip">Slip Ramalan</span>
+            </h2>
+
+            <div class="nums" id="nums"></div>
+
+            <div class="meta">
+                <div class="chip"><small data-i18n="chipColor">Warna Hoki</small><b id="rWarna"></b></div>
+                <div class="chip"><small data-i18n="chipBet">Taruhan Bintang</small><b id="rBet"></b></div>
+                <div class="chip"><small data-i18n="chipZod">Zodiak</small><b id="rZod"></b></div>
+                <div class="chip"><small data-i18n="chipScore">Skor</small><b id="rSkor"></b></div>
+            </div>
+
+            <div class="bar"><i id="bar"></i></div>
+            <p class="fortune" id="rFort"></p>
+
+            <button class="btn gold" id="btnDl" data-i18n="btnDl">Unduh Gambar Slip</button>
+        </section>
+
+        <p class="disclaimer" data-i18n="disclaimer">Ramalan ini murni hiburan.</p>
+        <footer data-i18n="footer">Lintasan Langit — ditulis oleh bintang.</footer>
+    </div>
+
+    <canvas id="cv" width="1080" height="1350" style="display: none"></canvas>
+
+    <script>
+        'use strict';
+
+        /* --------------------------------------------------
+           1. PRNG deterministik (xmur3 + mulberry32)
+           Input sama -> hasil sama.
+           ponytail: ganti ke SHA-256 bila perlu audit.
+        -------------------------------------------------- */
+        function xmur3(str) {
+            let h = 1779033703 ^ str.length;
+            for (let i = 0; i < str.length; i++) {
+                h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+                h = (h << 13) | (h >>> 19);
+            }
+            return () => {
+                h = Math.imul(h ^ (h >>> 16), 2246822507);
+                h = Math.imul(h ^ (h >>> 13), 3266489909);
+                return (h ^= h >>> 16) >>> 0;
+            };
+        }
+
+        function mulberry32(seed) {
+            let state = seed;
+            return () => {
+                state |= 0;
+                state = (state + 0x6d2b79f5) | 0;
+                let value = Math.imul(state ^ (state >>> 15), 1 | state);
+                value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
+                return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        /* --------------------------------------------------
+           2. Zodiak dari string YYYY-MM-DD
+        -------------------------------------------------- */
+        function zodiac(dateStr) {
+            if (!dateStr) return null;
+            const month = Number(dateStr.slice(5, 7));
+            const day = Number(dateStr.slice(8, 10));
+            const bounds = [
+                [1, 20, 'Aquarius'], [2, 19, 'Pisces'], [3, 21, 'Aries'],
+                [4, 20, 'Taurus'], [5, 21, 'Gemini'], [6, 22, 'Cancer'],
+                [7, 23, 'Leo'], [8, 23, 'Virgo'], [9, 23, 'Libra'],
+                [10, 24, 'Scorpio'], [11, 23, 'Sagitarius'], [12, 22, 'Capricorn'],
+            ];
+            let sign = 'Capricorn';
+            for (const [m, d, name] of bounds) {
+                if (month > m || (month === m && day >= d)) sign = name;
+            }
+            return sign;
+        }
+
+        /* --------------------------------------------------
+           3. State + referensi DOM
+        -------------------------------------------------- */
+        const $ = (id) => document.getElementById(id);
+
+        let segmen = 'JRA';
+
+        // Daftar sirkuit per segmen (ikut jadi faktor seed ramalan).
+        const COURSES = {
+            JRA: ['Tokyo', 'Nakayama', 'Hanshin', 'Kyoto', 'Chukyo', 'Niigata', 'Fukushima', 'Kokura', 'Hakodate', 'Sapporo'],
+            NAR: ['Oi', 'Funabashi', 'Kawasaki', 'Urawa', 'Morioka', 'Mizusawa', 'Sonoda', 'Himeji', 'Kochi', 'Saga', 'Nagoya', 'Kasamatsu', 'Kanazawa', 'Monbetsu'],
+            INT: ['Sha Tin', 'Happy Valley', 'Longchamp', 'Ascot', 'Flemington', 'Meydan', 'Kranji', 'Seoul', 'Randwick', 'Churchill Downs'],
+        };
+
+        /* Kamus bahasa. Indonesia default; Inggris opsional.
+           Panjang tiap array SENI disamakan agar indeks RNG deterministik
+           identik di kedua bahasa (seed sama -> indeks sama). */
+        const STR = {
+            id: {
+                sub: 'Ramalan pacuan kuda dari bintang-bintang. Pilih tanggal, baca langit, pasang senyum.',
+                hBirth: 'Data Kelahiran', lblBirth: 'Tanggal lahir',
+                zodEmpty: 'Pilih tanggal lahir — zodiak terbaca otomatis.', zodPrefix: 'Zodiak: ',
+                hRace: 'Info Balapan', lblSeg: 'Segmen', lblCourse: 'Racecourse / Sirkuit',
+                lblRaceNo: 'Nomor Race', lblRaceDay: 'Tanggal race day', lblTotal: 'Jumlah kuda peserta',
+                lblNames: 'Nama kuda (opsional, pisahkan koma)', namesPh: 'mis. Sakura Bolt, Golden Fuji',
+                btnOpen: 'Buka Ramalan Langit', btnShuffle: 'Acak Ramalan',
+                slip: 'Slip Ramalan', chipColor: 'Warna Hoki', chipBet: 'Taruhan Bintang',
+                chipZod: 'Zodiak', chipScore: 'Skor', btnDl: 'Unduh Gambar Slip',
+                disclaimer: 'Ramalan ini murni hiburan.',
+                footer: 'Lintasan Langit — ditulis oleh bintang.',
+                anchorTag: 'Jangkar', boxTag: 'Box', anchorCanvas: 'JANGKAR',
+                needBirth: 'Isi tanggal lahir dulu.', needOpen: 'Buka ramalan dulu.',
+                title: 'Lintasan Langit — Ramalan Pacuan Kuda Zodiak',
+                desc: 'Lintasan Langit: ramalan pacuan kuda playful dari zodiak + info balapan JRA/NAR. Murni hiburan.',
+                cColor: 'WARNA HOKI', cBet: 'TARUHAN BINTANG', cScore: 'SKOR KEBERUNTUNGAN',
+            },
+            en: {
+                sub: 'Playful horse-racing fortune from the stars. Pick a date, read the sky, smile.',
+                hBirth: 'Birth Data', lblBirth: 'Date of birth',
+                zodEmpty: 'Pick a birth date — zodiac reads automatically.', zodPrefix: 'Zodiac: ',
+                hRace: 'Race Info', lblSeg: 'Segment', lblCourse: 'Racecourse / Track',
+                lblRaceNo: 'Race Number', lblRaceDay: 'Race day date', lblTotal: 'Number of horses',
+                lblNames: 'Horse names (optional, comma separated)', namesPh: 'e.g. Sakura Bolt, Golden Fuji',
+                btnOpen: 'Reveal Sky Fortune', btnShuffle: 'Shuffle Fortune',
+                slip: 'Fortune Slip', chipColor: 'Lucky Color', chipBet: 'Star Bet',
+                chipZod: 'Zodiac', chipScore: 'Score', btnDl: 'Download Slip Image',
+                disclaimer: 'This fortune is pure entertainment.',
+                footer: 'Lintasan Langit — written by the stars.',
+                anchorTag: 'Anchor', boxTag: 'Box', anchorCanvas: 'ANCHOR',
+                needBirth: 'Please fill in your birth date first.', needOpen: 'Reveal the fortune first.',
+                title: 'Lintasan Langit — Zodiac Horse Racing Fortune',
+                desc: 'Lintasan Langit: playful horse-racing fortune from zodiac + JRA/NAR race info. Pure entertainment.',
+                cColor: 'LUCKY COLOR', cBet: 'STAR BET', cScore: 'LUCK SCORE',
+            },
+        };
+
+        const AR = {
+            id: {
+                warna: [
+                    'Emas Trofi', 'Hijau Lintasan', 'Merah Marun', 'Biru Langit', 'Putih Awan',
+                    'Hitam Legam', 'Kuning Mentari', 'Ungu Senja', 'Perak Kilat', 'Jingga Fajar',
+                ],
+                bet: [
+                    'Win — satu jagoan',
+                    'Place — aman tiga besar',
+                    'Quinella — dua kuda bebas urutan',
+                    'Exacta — tebak urutan 1-2',
+                    'Trio — tiga kuda sekaligus',
+                    'BOX 5 — sebar jaring bintang',
+                ],
+                a: [
+                    'Langit di atas %C berkabut tipis, pertanda kuda nomor %N berlari seolah dikejar hujan.',
+                    'Saturnus berbisik ke telinga %Z: jangan berkedip di tikungan terakhir %R, keajaiban menyalip dari sisi dalam.',
+                    'Komet melintasi %C tepat saat %R dimulai — para bandar mengerutkan dahi, para bintang tertawa.',
+                    'Angin %C membawa aroma rumput dan keberuntungan %Z yang belum tercatat sejak era Meiji.',
+                ],
+                b: [
+                    'Kuda nomor %N kabarnya sarapan wortel dua kali lipat pagi ini. Itu bukan data, itu firasat.',
+                    'Jika %W terlihat di tribun, jangan panik: itu sinyal semesta, bukan kebetulan laundry.',
+                    'Joki disarankan tersenyum ke arah bulan sebelum start. Sains belum membuktikan, tapi bintang bersikeras.',
+                    'Nomor %N konon bermimpi menang semalam. Mimpi belum pernah kalah BOX, kata tetua paddock.',
+                ],
+            },
+            en: {
+                warna: [
+                    'Trophy Gold', 'Turf Green', 'Maroon Red', 'Sky Blue', 'Cloud White',
+                    'Coal Black', 'Sun Yellow', 'Dusk Purple', 'Flash Silver', 'Dawn Orange',
+                ],
+                bet: [
+                    'Win — one champion',
+                    'Place — safe in top three',
+                    'Quinella — two horses any order',
+                    'Exacta — predict order 1-2',
+                    'Trio — three horses at once',
+                    'BOX 5 — cast the star net',
+                ],
+                a: [
+                    'Hazy skies over %C: a sign horse %N will run as if chased by rain.',
+                    'Saturn whispers to %Z: do not blink at the final turn of %R, a miracle overtakes from the inside.',
+                    'A comet crosses %C just as %R begins — bookmakers frown, the stars laugh.',
+                    'The wind of %C carries turf scent and %Z luck unrecorded since the Meiji era.',
+                ],
+                b: [
+                    'Horse %N reportedly ate double carrots this morning. That is not data, that is a hunch.',
+                    'If %W appears in the stands, do not panic: it is a signal from the universe, not a laundry coincidence.',
+                    'Jockeys are advised to smile at the moon before the start. Science unproven, stars insistent.',
+                    'Number %N allegedly dreamed of winning last night. Dreams never lose a BOX, say the paddock elders.',
+                ],
+            },
+        };
+
+        let lang = localStorage.getItem('ll-lang') || 'id';
+
+        /* --------------------------------------------------
+           4. Event: segmen + zodiak live
+        -------------------------------------------------- */
+        const setSegmen = (nama) => {
+            segmen = nama;
+            for (const s of ['JRA', 'NAR', 'INT']) {
+                $('seg' + s).classList.toggle('on', s === nama);
+            }
+            const sel = $('course');
+            sel.innerHTML = COURSES[nama].map((c) => '<option>' + c + '</option>').join('');
+            sel.value = COURSES[nama][0];
+        };
+
+        $('segJRA').onclick = () => setSegmen('JRA');
+
+        $('segNAR').onclick = () => setSegmen('NAR');
+
+        $('segINT').onclick = () => setSegmen('INT');
+
+        setSegmen('JRA');
+
+        const T = () => STR[lang];
+
+        // Persist tanggal lahir di browser; race day default hari ini.
+        // ponytail: key 'll-lahir' versi 1; tambah migrasi bila format berubah.
+        const todayLocal = () => {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        };
+
+        const showZodiac = () => {
+            const z = zodiac($('lahir').value);
+            $('zodText').textContent = z ? T().zodPrefix + z : T().zodEmpty;
+        };
+
+        const setLang = (next, rerender) => {
+            lang = next;
+            localStorage.setItem('ll-lang', next);
+            document.documentElement.lang = next === 'id' ? 'id' : 'en';
+            document.title = T().title;
+            document.querySelector('meta[name="description"]').setAttribute('content', T().desc);
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const k = el.getAttribute('data-i18n');
+                if (T()[k] != null) el.textContent = T()[k];
+            });
+            $('names').placeholder = T().namesPh;
+            $('langID').classList.toggle('on', next === 'id');
+            $('langEN').classList.toggle('on', next === 'en');
+            showZodiac();
+            if (rerender && window._last) ramal(window._last.acak, true);
+        };
+
+        $('langID').onclick = () => setLang('id', true);
+        $('langEN').onclick = () => setLang('en', true);
+
+        $('lahir').value = localStorage.getItem('ll-lahir') || '';
+        if (!$('race').value) $('race').value = todayLocal();
+
+        $('lahir').onchange = (e) => {
+            localStorage.setItem('ll-lahir', e.target.value || '');
+            showZodiac();
+        };
+
+        /* --------------------------------------------------
+           5. Inti ramalan
+        -------------------------------------------------- */
+        const buildSeed = () => (
+            [
+                $('lahir').value || '2000-01-01',
+                $('race').value || todayLocal(),
+                segmen,
+                ($('course').value || 'Tokyo').trim().toLowerCase(),
+                $('raceno').value,
+                $('total').value,
+            ].join('|')
+        );
+
+        function ramal(isAcak, reuseSeed) {
+            const lahir = $('lahir').value;
+            if (!lahir) {
+                alert(T().needBirth);
+                $('lahir').focus();
+                return;
+            }
+
+            const seed = reuseSeed && window._last ? window._last.seed : (isAcak ? buildSeed() + '#' + Date.now() + Math.random() : buildSeed());
+            const rnd = mulberry32(xmur3(seed)());
+            const D = AR[lang];
+
+            // 5 angka BOX dari total peserta
+            const total = Math.min(18, Math.max(5, parseInt($('total').value, 10) || 12));
+            const pool = Array.from({ length: total }, (_, i) => i + 1);
+            for (let i = pool.length - 1; i > 0; i--) {
+                const j = Math.floor(rnd() * (i + 1));
+                [pool[i], pool[j]] = [pool[j], pool[i]];
+            }
+            const pick = pool.slice(0, 5).sort((a, b) => a - b);
+
+            // Jangkar: stream seed sendiri, tak terpengaruh urutan konsumsi rnd utama.
+            const rndJangkar = mulberry32(xmur3(seed + '|jangkar')());
+            const anchor = pick[Math.floor(rndJangkar() * pick.length)];
+
+            // Atribut playful (array ID/EN panjang sama -> indeks identik per seed)
+            const warnaIdx = Math.floor(rnd() * D.warna.length);
+            const betIdx = Math.floor(rnd() * D.bet.length);
+            const warna = D.warna[warnaIdx];
+            const bet = D.bet[betIdx];
+            const skor = 1 + Math.floor(rnd() * 100);
+            const z = zodiac(lahir) || '-';
+            const names = $('names').value.split(',').map((s) => s.trim()).filter(Boolean);
+            const course = $('course').value || 'Tokyo';
+            const raceno = $('raceno').value;
+
+            const template = D.a[Math.floor(rnd() * D.a.length)]
+                + ' '
+                + D.b[Math.floor(rnd() * D.b.length)];
+            const fortune = template
+                .replaceAll('%C', course)
+                .replaceAll('%R', raceno)
+                .replaceAll('%Z', z)
+                .replaceAll('%W', warna)
+                .replaceAll('%N', anchor);
+
+            // Render
+            $('hasil').style.display = 'block';
+            $('hasilTitle').textContent = z + ' • ' + segmen + ' ' + course + ' ' + raceno;
+            $('nums').innerHTML = pick
+                .map((n) => (
+                    '<div class="nw">' + (n === anchor ? '<span class="tag">' + T().anchorTag + '</span>' : '<span class="tag dim">' + T().boxTag + '</span>')
+                    + '<div class="num' + (n === anchor ? ' anchor' : '') + '">' + n + '</div>'
+                    + (names[n - 1] ? '<div class="hn">' + names[n - 1].slice(0, 14) + '</div>' : '')
+                    + '</div>'
+                ))
+                .join('');
+            $('rWarna').innerHTML = '<span class="dot" style="background:' + DOT[warnaIdx] + '"></span>' + warna;
+            $('rBet').textContent = bet;
+            $('rZod').textContent = z;
+            $('rSkor').textContent = skor + ' / 100';
+            $('rFort').textContent = fortune;
+
+            const bar = $('bar');
+            bar.style.width = '0';
+            setTimeout(() => { bar.style.width = skor + '%'; }, 60);
+
+            $('hasil').scrollIntoView({ behavior: 'smooth' });
+            window._last = { seed, acak: !!isAcak, lang, pick, anchor, warna, warnaIdx, bet, skor, z, fort: fortune, course, rn: raceno, seg: segmen, day: $('race').value || '', names };
+        }
+
+        // Warna dot sejajar indeks array warna ID/EN.
+        const DOT = ['#d4af37', '#2ecc71', '#8e1f2f', '#4aa3ff', '#eee', '#222', '#d4af37', '#8e44ad', '#c0c0c0', '#e67e22'];
+
+        $('btnRamalan').onclick = () => ramal(false);
+        $('btnAcak').onclick = () => ramal(true);
+
+        /* --------------------------------------------------
+           6. Unduh slip PNG (canvas 1080x1350)
+        -------------------------------------------------- */
+        $('btnDl').onclick = () => {
+            const L = window._last;
+            if (!L) {
+                alert(T().needOpen);
+                return;
+            }
+            const S = STR[L.lang] || T();
+
+            const c = $('cv');
+            const x = c.getContext('2d');
+            const W = 1080, H = 1350;
+
+            // --- Latar: hijau pekat + vignette + garis lintasan samar ---
+            const bg = x.createLinearGradient(0, 0, 0, H);
+            bg.addColorStop(0, '#0e2f1e');
+            bg.addColorStop(0.55, '#0a2013');
+            bg.addColorStop(1, '#060f09');
+            x.fillStyle = bg;
+            x.fillRect(0, 0, W, H);
+
+            // cahaya emas atas
+            const glow = x.createRadialGradient(540, -100, 50, 540, -100, 700);
+            glow.addColorStop(0, 'rgba(212,175,55,.28)');
+            glow.addColorStop(1, 'rgba(212,175,55,0)');
+            x.fillStyle = glow;
+            x.fillRect(0, 0, W, 700);
+
+            // garis lintasan samar
+            x.strokeStyle = 'rgba(212,175,55,.10)';
+            x.lineWidth = 2;
+            for (const yy of [300, 640, 1090]) {
+                x.beginPath();
+                x.moveTo(90, yy);
+                x.bezierCurveTo(380, yy - 26, 700, yy + 26, 990, yy);
+                x.stroke();
+            }
+
+            // --- Bingkai ganda elegan ---
+            x.strokeStyle = '#d4af37';
+            x.lineWidth = 4;
+            roundRect(x, 36, 36, W - 72, H - 72, 28);
+            x.stroke();
+            x.strokeStyle = 'rgba(212,175,55,.35)';
+            x.lineWidth = 1.5;
+            roundRect(x, 54, 54, W - 108, H - 108, 20);
+            x.stroke();
+
+            const cx = W / 2;
+            x.textAlign = 'center';
+
+            // --- Kop karcis ---
+            x.fillStyle = '#e9d9a0';
+            x.font = '400 25px Georgia';
+            x.fillText('—  S K Y  T R A C K  F O R T U N E  —', cx, 130);
+
+            x.fillStyle = '#f7efcd';
+            x.font = '900 62px Georgia';
+            x.fillText('LINTASAN LANGIT', cx, 190);
+
+            x.fillStyle = 'rgba(233,217,160,.85)';
+            x.font = '400 27px Georgia';
+            x.fillText(L.seg + '   ·   ' + L.course + '   ·   ' + L.rn, cx, 232);
+
+            x.fillStyle = 'rgba(157,184,166,.9)';
+            x.font = '400 24px sans-serif';
+            x.fillText((L.day || '') + '      ·      ' + L.z, cx, 264);
+
+            // garis ornamen emas + berlian kecil
+            x.strokeStyle = '#d4af37';
+            x.lineWidth = 2;
+            x.beginPath(); x.moveTo(220, 292); x.lineTo(505, 292); x.stroke();
+            x.beginPath(); x.moveTo(575, 292); x.lineTo(860, 292); x.stroke();
+            x.save();
+            x.translate(cx, 292); x.rotate(Math.PI / 4);
+            x.fillStyle = '#d4af37'; x.fillRect(-9, -9, 18, 18);
+            x.restore();
+
+            // --- Lima bola nomor ---
+            x.font = '800 58px Outfit, sans-serif';
+            L.pick.forEach((n, i) => {
+                const bx = 172 + i * 184;
+                const by = 452;
+                const isA = n === L.anchor;
+
+                if (isA) {
+                    const halo = x.createRadialGradient(bx, by, 10, bx, by, 110);
+                    halo.addColorStop(0, 'rgba(243,214,124,.45)');
+                    halo.addColorStop(1, 'rgba(243,214,124,0)');
+                    x.fillStyle = halo;
+                    x.beginPath(); x.arc(bx, by, 110, 0, 7); x.fill();
+
+                    const gold = x.createLinearGradient(bx - 62, by - 62, bx + 62, by + 62);
+                    gold.addColorStop(0, '#fff6d8');
+                    gold.addColorStop(0.5, '#f3d67c');
+                    gold.addColorStop(1, '#a8841f');
+                    x.fillStyle = gold;
+                    x.beginPath(); x.arc(bx, by, 66, 0, 7); x.fill();
+                    x.lineWidth = 3;
+                    x.strokeStyle = '#fff6d8';
+                    x.stroke();
+
+                    x.fillStyle = '#4a3205';
+                    x.font = '800 21px Outfit, sans-serif';
+                    x.fillText(S.anchorCanvas, bx, by - 86);
+                    x.fillStyle = '#2a1e02';
+                    x.font = '800 58px Outfit, sans-serif';
+                    x.fillText(n, bx, by + 21);
+                } else {
+                    x.fillStyle = 'rgba(247,242,227,.06)';
+                    x.beginPath(); x.arc(bx, by, 66, 0, 7); x.fill();
+                    x.lineWidth = 2.5;
+                    x.strokeStyle = 'rgba(212,175,55,.75)';
+                    x.stroke();
+                    x.fillStyle = '#f7f2e3';
+                    x.font = '800 58px Outfit, sans-serif';
+                    x.fillText(n, bx, by + 21);
+                    x.fillStyle = 'rgba(157,184,166,.75)';
+                    x.font = '400 20px Outfit, sans-serif';
+                    x.fillText(S.boxTag.toUpperCase(), bx, by + 92);
+                }
+
+                if (L.names[n - 1]) {
+                    x.fillStyle = 'rgba(247,242,227,.85)';
+                    x.font = '400 23px Outfit, sans-serif';
+                    x.fillText(ellipsis(L.names[n - 1], 15), bx, by + 122);
+                    x.font = '800 58px Outfit, sans-serif';
+                }
+            });
+
+            // --- Panel kaca info ---
+            x.fillStyle = 'rgba(255,255,255,.045)';
+            roundRect(x, 90, 660, 900, 300, 18);
+            x.fill();
+            x.strokeStyle = 'rgba(212,175,55,.35)';
+            x.lineWidth = 1.5;
+            roundRect(x, 90, 660, 900, 300, 18);
+            x.stroke();
+
+            x.textAlign = 'left';
+            infoRow(x, S.cColor, L.warna, 150, 736);
+            divider(x, 790);
+            // bet bisa panjang: perkecil otomatis
+            const betSize = L.bet.length > 30 ? 30 : 34;
+            infoRow(x, S.cBet, L.bet, 150, 836, betSize);
+            divider(x, 890);
+
+            // --- Skor: angka besar + bar ramping ---
+            x.fillStyle = 'rgba(157,184,166,.9)';
+            x.font = '400 24px Outfit, sans-serif';
+            x.fillText(S.cScore, 150, 1022);
+            x.textAlign = 'right';
+            x.fillStyle = '#f3d67c';
+            x.font = '800 40px Outfit, sans-serif';
+            x.fillText(L.skor + ' / 100', 930, 1026);
+            x.textAlign = 'left';
+            roundRect(x, 150, 1044, 780, 14, 7);
+            x.fillStyle = 'rgba(255,255,255,.10)';
+            x.fill();
+            if (L.skor > 0) {
+                const sg = x.createLinearGradient(150, 0, 930, 0);
+                sg.addColorStop(0, '#2c7a4b');
+                sg.addColorStop(0.6, '#f3d67c');
+                sg.addColorStop(1, '#d4af37');
+                roundRect(x, 150, 1044, Math.max(14, 780 * L.skor / 100), 14, 7);
+                x.fillStyle = sg;
+                x.fill();
+            }
+
+            // --- Ramalan: panel kutipan ---
+            x.fillStyle = 'rgba(212,175,55,.07)';
+            roundRect(x, 90, 1090, 900, 130, 14);
+            x.fill();
+            x.fillStyle = '#d4af37';
+            x.fillRect(90, 1090, 5, 130);
+            x.fillStyle = '#f3d67c';
+            x.font = '700 44px Georgia';
+            x.fillText('\u201C', 112, 1130);
+            x.fillStyle = 'rgba(247,242,227,.94)';
+            x.font = '400 27px Outfit, sans-serif';
+            wrapFortune(x, L.fort, 150, 1128, 780, 38);
+
+            // --- Kaki karcis ---
+            x.textAlign = 'center';
+            x.fillStyle = 'rgba(157,184,166,.85)';
+            x.font = '400 23px Outfit, sans-serif';
+            x.fillText(S.disclaimer, cx, 1268);
+
+            const a = document.createElement('a');
+            a.download = 'lintasan-langit.png';
+            a.href = c.toDataURL('image/png');
+            a.click();
+        };
+
+        function roundRect(x, px, py, w, h, r) {
+            x.beginPath();
+            x.moveTo(px + r, py);
+            x.arcTo(px + w, py, px + w, py + h, r);
+            x.arcTo(px + w, py + h, px, py + h, r);
+            x.arcTo(px, py + h, px, py, r);
+            x.arcTo(px, py, px + w, py, r);
+            x.closePath();
+        }
+
+        function infoRow(x, label, value, px, py, size) {
+            x.fillStyle = 'rgba(157,184,166,.85)';
+            x.font = '400 22px Outfit, sans-serif';
+            x.fillText(label, px, py - 32);
+            x.fillStyle = '#f7f2e3';
+            x.font = '700 ' + (size || 36) + 'px Georgia';
+            x.fillText(value, px, py + 4);
+        }
+
+        function divider(x, py) {
+            x.strokeStyle = 'rgba(212,175,55,.22)';
+            x.lineWidth = 1;
+            x.beginPath(); x.moveTo(150, py); x.lineTo(930, py); x.stroke();
+        }
+
+        function ellipsis(s, max) {
+            s = String(s);
+            return s.length > max ? s.slice(0, max - 1) + '…' : s;
+        }
+
+        function wrapFortune(x, text, px, py, maxW, lh) {
+            const words = String(text).split(' ');
+            let line = '', y = py, lines = 0;
+            const flush = (s) => { x.fillText(s, px, y); };
+            for (const w of words) {
+                const t = line ? line + ' ' + w : w;
+                if (x.measureText(t).width > maxW && line) {
+                    flush(line); line = w; y += lh; lines++;
+                    if (lines >= 2) break;
+                } else line = t;
+            }
+            if (lines < 3) flush(line);
+        }
+
+        function wrapText(x, text, px, py, lineHeight) {
+            wrapFortune(x, text, px, py, 900, lineHeight);
+        }
+
+        // Boot: terapkan bahasa tersimpan (default ID), tanpa render ulang.
+        setLang(lang === 'en' ? 'en' : 'id', false);
+        if (window._last) $('hasilTitle').textContent = T().slip;
+    </script>
+</body>
+
+</html>

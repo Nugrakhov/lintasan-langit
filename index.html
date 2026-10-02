@@ -368,6 +368,32 @@
             text-align: center;
         }
 
+        /* ============ Toast kecil pengganti alert() ============ */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 26px;
+            transform: translateX(-50%) translateY(20px);
+            max-width: min(92vw, 480px);
+            padding: 12px 18px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(8, 23, 15, 0.96);
+            color: var(--gold-2);
+            font-size: 14px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 50;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         footer {
             margin-top: 14px;
             color: #5b7263;
@@ -491,7 +517,7 @@
                 <svg class="i" viewBox="0 0 24 24">
                     <path d="M8 21h8M12 17v4M4 4h16v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4z" />
                 </svg>
-                <span id="hasilTitle" data-i18n-ph="slip">Slip Ramalan</span>
+                <span id="hasilTitle">Slip Ramalan</span>
             </h2>
 
             <div class="nums" id="nums"></div>
@@ -512,6 +538,8 @@
         <p class="disclaimer" data-i18n="disclaimer">Ramalan ini murni hiburan.</p>
         <footer data-i18n="footer">Lintasan Langit — ditulis oleh bintang.</footer>
     </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
 
     <canvas id="cv" width="1080" height="1350" style="display: none"></canvas>
 
@@ -578,7 +606,7 @@
         const COURSES = {
             JRA: ['Tokyo', 'Nakayama', 'Hanshin', 'Kyoto', 'Chukyo', 'Niigata', 'Fukushima', 'Kokura', 'Hakodate', 'Sapporo'],
             NAR: ['Oi', 'Funabashi', 'Kawasaki', 'Urawa', 'Morioka', 'Mizusawa', 'Sonoda', 'Himeji', 'Kochi', 'Saga', 'Nagoya', 'Kasamatsu', 'Kanazawa', 'Monbetsu'],
-            INT: ['Sha Tin', 'Happy Valley', 'Longchamp', 'Ascot', 'Flemington', 'Meydan', 'Kranji', 'Seoul', 'Randwick', 'Churchill Downs'],
+            INT: ['Sha Tin', 'Happy Valley', 'Longchamp', 'Ascot', 'Flemington', 'Meydan', 'Seoul', 'Randwick', 'Churchill Downs', 'Del Mar', 'Santa Anita'],
         };
 
         /* Kamus bahasa. Indonesia default; Inggris opsional.
@@ -703,6 +731,16 @@
 
         const T = () => STR[lang];
 
+        /* ----- Toast kecil pengganti alert() ----- */
+        let toastTimer = null;
+        function toast(msg) {
+            const t = $('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
         // Persist tanggal lahir di browser; race day default hari ini.
         // ponytail: key 'll-lahir' versi 1; tambah migrasi bila format berubah.
         const todayLocal = () => {
@@ -760,7 +798,7 @@
         function ramal(isAcak, reuseSeed) {
             const lahir = $('lahir').value;
             if (!lahir) {
-                alert(T().needBirth);
+                toast(T().needBirth);
                 $('lahir').focus();
                 return;
             }
@@ -829,7 +867,7 @@
         }
 
         // Warna dot sejajar indeks array warna ID/EN.
-        const DOT = ['#d4af37', '#2ecc71', '#8e1f2f', '#4aa3ff', '#eee', '#222', '#d4af37', '#8e44ad', '#c0c0c0', '#e67e22'];
+        const DOT = ['#d4af37', '#2ecc71', '#8e1f2f', '#4aa3ff', '#eee', '#222', '#ffdd33', '#8e44ad', '#c0c0c0', '#e67e22'];
 
         $('btnRamalan').onclick = () => ramal(false);
         $('btnAcak').onclick = () => ramal(true);
@@ -840,7 +878,7 @@
         $('btnDl').onclick = () => {
             const L = window._last;
             if (!L) {
-                alert(T().needOpen);
+                toast(T().needOpen);
                 return;
             }
             const S = STR[L.lang] || T();

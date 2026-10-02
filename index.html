@@ -533,6 +533,7 @@
             <p class="fortune" id="rFort"></p>
 
             <button class="btn gold" id="btnDl" data-i18n="btnDl">Unduh Gambar Slip</button>
+            <button class="btn ghost" id="btnShare" data-i18n="btnShare">Bagikan Slip</button>
         </section>
 
         <p class="disclaimer" data-i18n="disclaimer">Ramalan ini murni hiburan.</p>
@@ -623,6 +624,9 @@
                 btnOpen: 'Buka Ramalan Langit', btnShuffle: 'Acak Ramalan',
                 slip: 'Slip Ramalan', chipColor: 'Warna Hoki', chipBet: 'Taruhan Bintang',
                 chipZod: 'Zodiak', chipScore: 'Skor', btnDl: 'Unduh Gambar Slip',
+                btnShare: 'Bagikan Slip',
+                shareText: 'Slip ramalanku dari Lintasan Langit — murni hiburan.',
+                shareFallback: 'Perangkatmu belum mendukung berbagi langsung — gambar diunduh sebagai gantinya.',
                 disclaimer: 'Ramalan ini murni hiburan.',
                 footer: 'Lintasan Langit — ditulis oleh bintang.',
                 anchorTag: 'Jangkar', boxTag: 'Box', anchorCanvas: 'JANGKAR',
@@ -641,6 +645,9 @@
                 btnOpen: 'Reveal Sky Fortune', btnShuffle: 'Shuffle Fortune',
                 slip: 'Fortune Slip', chipColor: 'Lucky Color', chipBet: 'Star Bet',
                 chipZod: 'Zodiac', chipScore: 'Score', btnDl: 'Download Slip Image',
+                btnShare: 'Share Slip',
+                shareText: 'My fortune slip from Lintasan Langit — pure entertainment.',
+                shareFallback: 'Direct sharing is not supported on this device — the image was downloaded instead.',
                 disclaimer: 'This fortune is pure entertainment.',
                 footer: 'Lintasan Langit — written by the stars.',
                 anchorTag: 'Anchor', boxTag: 'Box', anchorCanvas: 'ANCHOR',
@@ -875,12 +882,9 @@
         /* --------------------------------------------------
            6. Unduh slip PNG (canvas 1080x1350)
         -------------------------------------------------- */
-        $('btnDl').onclick = () => {
+        // Gambar slip dipakai ulang oleh tombol Unduh & Bagikan.
+        function drawSlip() {
             const L = window._last;
-            if (!L) {
-                toast(T().needOpen);
-                return;
-            }
             const S = STR[L.lang] || T();
 
             const c = $('cv');
@@ -1062,10 +1066,49 @@
             x.font = '400 23px Outfit, sans-serif';
             x.fillText(S.disclaimer, cx, 1268);
 
+        }
+
+        $('btnDl').onclick = () => {
+            if (!window._last) {
+                toast(T().needOpen);
+                return;
+            }
+            drawSlip();
+            const c = $('cv');
             const a = document.createElement('a');
             a.download = 'lintasan-langit.png';
             a.href = c.toDataURL('image/png');
             a.click();
+        };
+
+        // Bagikan gambar slip langsung (Web Share API); fallback ke unduh.
+        $('btnShare').onclick = () => {
+            const L = window._last;
+            if (!L) {
+                toast(T().needOpen);
+                return;
+            }
+            drawSlip();
+            $('cv').toBlob((blob) => {
+                if (!blob) {
+                    toast(T().shareFallback);
+                    return;
+                }
+                const file = new File([blob], 'lintasan-langit.png', { type: 'image/png' });
+                const shareData = { files: [file], title: 'Lintasan Langit', text: T().shareText };
+                if (navigator.canShare && navigator.canShare(shareData)) {
+                    navigator.share(shareData).catch((e) => {
+                        if (!e || e.name !== 'AbortError') toast(T().shareFallback);
+                    });
+                } else {
+                    const a = document.createElement('a');
+                    a.download = 'lintasan-langit.png';
+                    a.href = URL.createObjectURL(blob);
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+                    toast(T().shareFallback);
+                }
+            }, 'image/png');
         };
 
         function roundRect(x, px, py, w, h, r) {
